@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/services/product/src/main/resources/db/migration/V1__init_database.sql" value="940feb94-2e45-4b62-b38d-ae1dee34bef0" />
+    <file url="file://$PROJECT_DIR$/services/product/src/main/resources/db/migration/V2__insert_data.sql" value="940feb94-2e45-4b62-b38d-ae1dee34bef0" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/4bb96761-f450-448b-aa2f-ab647efc010b/console.js" value="4bb96761-f450-448b-aa2f-ab647efc010b" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/940feb94-2e45-4b62-b38d-ae1dee34bef0/console.sql" value="940feb94-2e45-4b62-b38d-ae1dee34bef0" />
   </component>
 </project>
