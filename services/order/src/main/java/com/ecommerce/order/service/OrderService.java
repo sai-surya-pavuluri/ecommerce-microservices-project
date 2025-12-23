@@ -1,6 +1,7 @@
 package com.ecommerce.order.service;
 
 import com.ecommerce.order.clients.CustomerClient;
+import com.ecommerce.order.clients.PaymentClient;
 import com.ecommerce.order.clients.ProductClient;
 import com.ecommerce.order.dto.*;
 import com.ecommerce.order.exception.BusinessException;
@@ -22,6 +23,7 @@ public class OrderService {
 
     private final CustomerClient customerClient;
     private final ProductClient productClient;
+    private final PaymentClient paymentClient;
     private final OrderMapper orderMapper;
     private final OrderLineService orderLineService;
 
@@ -48,6 +50,15 @@ public class OrderService {
         }
 
         // 5. Start payment process
+        var payment = new PaymentRequest(
+                null,
+                orderRequest.amount(),
+                orderRequest.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(payment);
 
         // 6. Send the order confirmation --> notification microservice (kafka)
         orderProducer.sendOrderConfirmation(new OrderConfirmation(
