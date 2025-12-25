@@ -83,6 +83,16 @@ services:
       - microservices-net
 
 
+  config-server:
+    container_name: ms_config_server
+    image: configserver-ms:latest
+    ports:
+      - "8888:8888"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+
+
 networks:
   microservices-net:
     driver: bridge
