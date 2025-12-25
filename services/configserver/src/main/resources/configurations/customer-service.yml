@@ -10,3 +10,12 @@ spring:
       port: 27017
       database: customer
       authentication-database: admin
+
+api:
+    metadata:
+      name: "Customer Microservice"
+      description: "Manage customers via this microservice"
+      version: 1.0
+    contact:
+      - 1234567890
+      - 0987654321

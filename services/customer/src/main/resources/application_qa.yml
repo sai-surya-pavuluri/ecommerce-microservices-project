@@ -1,0 +1,16 @@
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+    activate:
+      on-profile: "qa"
+  application:
+    name: customer-service
+
+api:
+  metadata:
+    name: "Customer Microservice"
+    description: "Manage customers via this microservice (for testing purposes only)"
+    version: 1.0.1
+  contact:
+    - 1234567890
+    - 0987654321

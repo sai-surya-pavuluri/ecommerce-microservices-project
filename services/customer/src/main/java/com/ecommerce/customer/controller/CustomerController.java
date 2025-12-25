@@ -1,10 +1,12 @@
 package com.ecommerce.customer.controller;
 
+import com.ecommerce.customer.dto.ApiDetails;
 import com.ecommerce.customer.dto.CustomerRequest;
 import com.ecommerce.customer.dto.CustomerResponse;
 import com.ecommerce.customer.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final ApiDetails apiDetails;
 
     @PostMapping
     public ResponseEntity<String> createCustomer(@RequestBody @Valid CustomerRequest customer) {
@@ -51,6 +54,11 @@ public class CustomerController {
     public ResponseEntity<Void> deleteCustomerById(@PathVariable("customer-id") String customerId) {
         customerService.deleteById(customerId);
         return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<ApiDetails> getApiInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(apiDetails);
     }
 
 
