@@ -128,7 +128,11 @@
                 <version>3.5.1</version>
                 <configuration>
                     <to>
-                        <image>${project.artifactId}-ms</image>
+                        <image>${docker.image}</image>
+                        <tags>
+                            <tag>latest</tag>
+                            <tag>${project.version}</tag>
+                        </tags>
                     </to>
                 </configuration>
             </plugin>
