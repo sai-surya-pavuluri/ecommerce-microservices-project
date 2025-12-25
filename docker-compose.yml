@@ -91,55 +91,111 @@ services:
 
   config-server:
     container_name: ms_config_server
-    image: configserver-ms:latest
+    image: saisuryap/configserver-ms:latest
+    pull_policy: always
     ports:
       - "8888:8888"
     networks:
       - microservices-net
     restart: unless-stopped
-    healthcheck:
-      test: [ "CMD", "curl", "-fsS", "http://localhost:8888/actuator/health" ]
-      interval: 10s
-      timeout: 3s
-      retries: 20
 
   discovery-service:
     container_name: ms_discovery
-    image: discovery-ms:latest
+    image: saisuryap/discovery-ms:latest
+    pull_policy: always
     ports:
       - "8761:8761"
     networks:
       - microservices-net
     restart: unless-stopped
     depends_on:
-      config-server:
-        condition: service_healthy
-    healthcheck:
-      test: [ "CMD", "curl", "-fsS", "http://localhost:8761/actuator/health" ]
-      interval: 10s
-      timeout: 3s
-      retries: 30
-
+      - config-server
 
   customer-service:
     container_name: ms_customer
-    image: customer-ms:latest
+    image: saisuryap/customer-ms:latest
+    pull_policy: always
     ports:
       - "8090:8090"
     networks:
       - microservices-net
     restart: unless-stopped
     depends_on:
-      discovery-service:
-        condition: service_healthy
-      mongodb:
-        condition: service_started
-    healthcheck:
-      test: [ "CMD", "curl", "-fsS", "http://localhost:8090/actuator/health" ]
-      interval: 10s
-      timeout: 3s
-      retries: 30
+      - discovery-service
+      - mongodb
 
+  product-service:
+    container_name: ms_product
+    image: saisuryap/product-ms:latest
+    pull_policy: always
+    ports:
+      - "8050:8050"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    depends_on:
+      - discovery-service
+      - postgres
+
+  order-service:
+    container_name: ms_order
+    image: saisuryap/order-ms:latest
+    pull_policy: always
+    ports:
+      - "8070:8070"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    depends_on:
+      - discovery-service
+      - postgres
+      - kafka
+
+  notification-service:
+    container_name: ms_notification
+    image: saisuryap/notification-ms:latest
+    pull_policy: always
+    ports:
+      - "8040:8040"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    depends_on:
+      - discovery-service
+      - mongodb
+      - kafka
+      - mail-dev
+
+  payment-service:
+    container_name: ms_payment
+    image: saisuryap/payment-ms:latest
+    pull_policy: always
+    ports:
+      - "8060:8060"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    depends_on:
+      - discovery-service
+      - postgres
+      - kafka
+
+  gateway-service:
+    container_name: ms_gateway
+    image: saisuryap/gateway-ms:latest
+    pull_policy: always
+    ports:
+      - "8222:8222"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    depends_on:
+      - discovery-service
+      - customer-service
+      - order-service
+      - notification-service
+      - payment-service
+      - product-service
 
 networks:
   microservices-net:
