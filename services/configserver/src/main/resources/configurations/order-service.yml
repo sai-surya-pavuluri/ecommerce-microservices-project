@@ -2,6 +2,8 @@ server:
   port: 8070
 
 spring:
+  application:
+    name: order-service
   datasource:
     url: jdbc:postgresql://postgres:5432/order
     username: admin
@@ -12,8 +14,8 @@ spring:
       ddl-auto: create
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-  Kafka:
-    bootstrap-servers: ms_kafka:29092
+  kafka:
+    bootstrap-servers: kafka:29092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

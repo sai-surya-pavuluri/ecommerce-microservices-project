@@ -9,6 +9,7 @@ services:
       PGDATA: /var/lib/postgresql/data
     volumes:
       - postgres:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     networks:
@@ -36,7 +37,8 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongo:/data
+      - mongo:/data/db
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin

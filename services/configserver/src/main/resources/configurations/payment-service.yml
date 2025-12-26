@@ -2,6 +2,8 @@ server:
   port: 8060
 
 spring:
+  application:
+    name: payment-service
   datasource:
     url: jdbc:postgresql://postgres:5432/payment
     username: admin
@@ -13,7 +15,7 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   kafka:
-    bootstrap-servers: ms_kafka:29092
+    bootstrap-servers: kafka:29092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
